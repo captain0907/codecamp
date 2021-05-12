@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>타이머</title>
+    <script>
+        function auth(num){
+            document.getElementById("startAuth").removeAttribute("disabled")
+
+            let time = num
+            const aaa = setInterval(function(){
+                const minutes = Math.floor(time / 60)
+                const seconds = time % 60
+                document.getElementById("timer").innerText = minutes + ":" + seconds
+
+                time = time - 1
+                if(time < 0){
+                    clearInterval(aaa)
+                    document.getElementById("startAuth").setAttribute("disabled", true)
+                }
+            }, 1000)
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <span id="timer">0:0</span>
+        <button id="getAuth" onclick="auth(10)">인증번호 받기</button>
+    </div>
+    <div>
+        <input type="text" />
+        <button id="startAuth" disabled>인증하기</button>
+    </div>
+
+</body>
+</html>

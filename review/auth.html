@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>인증번호</title>
+    <script>
+        function sendAuth(aaa, bbb){
+            const auth = String(Math.floor(Math.random()*1000000)).padStart(6, "0")
+            document.getElementById("auth").innerText = auth
+        }
+    </script>
+</head>
+<body>
+    <div id="auth">000000</div>
+    <button onclick="sendAuth(1, 2)">인증번호 전송</button>
+</body>
+</html>
