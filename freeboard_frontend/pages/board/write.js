@@ -23,6 +23,7 @@ import {
 	ButtonWrapper,
 } from "../../styles/Board.write";
 import { useState } from "react";
+import {useMutation, gql} from '@apollo/client'
 
 export default function BoardWritePage() {
 	const [writer, setWriter] = useState("");
@@ -31,6 +32,14 @@ export default function BoardWritePage() {
 	const [content, setContent] = useState("");
 	const [youtube, setYoutube] = useState("");
 	const [zipcode, setZipcode] = useState("");
+
+	const [aa] = useMutation(gql`
+		mutation createBoard($createBoardInput: CreateBoardInput!){
+			createBoard(createBoardInput: $createBoardInput){
+				_id
+			}
+		}
+	`)
 
 	const handleWriter = (e) => {
 		setWriter(e.target.value);
@@ -63,6 +72,16 @@ export default function BoardWritePage() {
 	};
 
 	const handleRegister = () => {
+		aa({
+			variables: {
+				createBoardInput: {
+					writer:"철수",
+					password:"1234",
+					title:"제목요",
+					contents:"내용요"
+				}
+			}
+		})
 		console.log(writer, pw, title, content, youtube, zipcode);
 	};
 
