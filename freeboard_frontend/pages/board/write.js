@@ -33,7 +33,7 @@ export default function BoardWritePage() {
 	const [youtube, setYoutube] = useState("");
 	const [zipcode, setZipcode] = useState("");
 
-	const [aa] = useMutation(gql`
+	const [createBoard] = useMutation(gql`
 		mutation createBoard($createBoardInput: CreateBoardInput!){
 			createBoard(createBoardInput: $createBoardInput){
 				_id
@@ -72,7 +72,7 @@ export default function BoardWritePage() {
 	};
 
 	const handleRegister = () => {
-		aa({
+		createBoard({
 			variables: {
 				createBoardInput: {
 					writer:"철수",

@@ -1,6 +1,6 @@
 import {useState} from 'react'
 
-function LoginPage(){
+const LoginPage = () => {
 
     const [email, setEmail] = useState("")
     const [pw, setPw] = useState("")

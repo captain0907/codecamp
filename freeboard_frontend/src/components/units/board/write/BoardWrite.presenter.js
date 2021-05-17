@@ -1,4 +1,4 @@
-export default function BoardWriteUI() {
+export default function BoardWriteUI(props) {
     return (
         <Wrapper>
             <Title>게시판 등록</Title>
@@ -8,7 +8,7 @@ export default function BoardWriteUI() {
                 <Writer 
                 type="text" 
                 placeholder="이름을 적어주세요." 
-                onChange={handleChangeWriter} 
+                onChange={props.handleChangeWriter} 
                 />
             </InputWrapper>
             </WriterWrapper>

@@ -22,18 +22,16 @@ export default function QueryDetailPage(){
         }
     })
 
-    console.log('data', data)
-
     return (
         <div>
             <div>
-                이름: {data && data.fetchProfile.name} 
+                이름: {data?.fetchProfile.name} 
             </div>
             <div>
-                나이: {data && data.fetchProfile.age}
+                나이: {data?.fetchProfile.age}
             </div>
             <div>
-                학교: {data && data.fetchProfile.school}
+                학교: {data?.fetchProfile.school}
             </div>
         </div>
     )
