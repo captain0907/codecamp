@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client"
 import { useState } from "react"
 import QueryWriteUI from './QueryWrite.presenter'
 import {useRouter} from 'next/router'
-import { CREATE_PROFILE, BBB } from './QueryWrite.queries'
+import { CREATE_PROFILE } from './QueryWrite.queries'
 
 // function Query() {
 const QueryWrite = () => {
@@ -14,11 +14,12 @@ const QueryWrite = () => {
         school: ""
     })
 
+    const [aaa, setAaa] = useState(false)
+
     const onChangeInput = (event) => {
-        setProfile({
-            ...profile,
-            [event.target.name]: event.target.value
-        })
+        const newProfile = { ...profile, [event.target.name]: event.target.value }
+        if(newProfile.name && newProfile.age && newProfile.school) setAaa(true)
+        setProfile(newProfile)
 
         // profile.aaa.bbb.ccc => "철수"
 
@@ -56,6 +57,7 @@ const QueryWrite = () => {
         <QueryWriteUI 
             onClickSubmit={onClickSubmit}
             onChangeInput={onChangeInput}
+            aaa={aaa}
         />
     )
 }
