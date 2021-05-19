@@ -41,14 +41,14 @@ const BoardListUI = ({data}) => {
         // 전체선택
         if(newCheckAll){
             let newCheck = {}
-            data?.fetchBoards.map((data) => { newCheck[data.number] = true })
+            data?.fetchBoards.forEach((data) => { newCheck[data.number] = true })
             setChecked(newCheck)
             setCheckedAll(true)
 
         // 전체선택 취소
         } else {
             let newCheck = {}
-            data?.fetchBoards.map((data) => { newCheck[data.number] = false })
+            data?.fetchBoards.forEach((data) => { newCheck[data.number] = false })
             setChecked(newCheck)
             setCheckedAll(false)
         }

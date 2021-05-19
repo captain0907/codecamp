@@ -1,5 +1,5 @@
 import {useQuery} from '@apollo/client'
-import BoardListUI from './BoardList.presenter3'
+import BoardListUI from './BoardList.presenter'
 import {FETCH_BOARDS} from './BoardList.queries'
 
 const BoardList = () => {

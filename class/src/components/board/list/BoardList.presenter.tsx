@@ -8,6 +8,9 @@ const BoardListUI = ({data}) => {
 
     const [checked, setChecked] = useState({
         // 각 버튼들의 체크상태 기록
+        // 318: true
+        // 320: true
+        // ... 10개 모두 true
     })
 
     const handleCheck = (event) => {
@@ -45,8 +48,16 @@ const BoardListUI = ({data}) => {
         if(newCheckAll){
             let newCheck = {}
             for(let i=0; i<data?.fetchBoards.length; i++){
-                newCheck = { ...newCheck, [data?.fetchBoards[i].number]: true }
+                newCheck[data?.fetchBoards[i].number] = true
             }
+            console.log(newCheck) // { 318: true, 320: true }
+
+            // {
+            //     ...profile,
+            //     [event.target.name]: event.target.value
+            // }
+
+
             setChecked(newCheck)
             setCheckedAll(true)
 
@@ -54,7 +65,7 @@ const BoardListUI = ({data}) => {
         } else {
             let newCheck = {}
             for(let i=0; i<data?.fetchBoards.length; i++){
-                newCheck = { ...newCheck, [data?.fetchBoards[i].number]: false }
+                newCheck[data?.fetchBoards[i].number] = false 
             }
             setChecked(newCheck)
             setCheckedAll(false)
@@ -70,12 +81,26 @@ const BoardListUI = ({data}) => {
                 <Date>작성일</Date>
             </RowHeaderWrapper>
             {data?.fetchBoards.map((board) => (
+                <>
                 <RowWrapper>
-                    <Checkbox type="checkbox" id={board.number} onClick={handleCheck} checked={checked[board.number]} />
+                    <Checkbox type="checkbox" id="318" onClick={handleCheck} checked={checked[board.number]} />
                     <No>{board.number}</No>
                     <Title>{board.title}</Title>
                     <Date>{getDate(board.createdAt)}</Date>
                 </RowWrapper>
+                <RowWrapper>
+                    <Checkbox type="checkbox" id={321} onClick={handleCheck} checked={checked[board.number]} />
+                    <No>{board.number}</No>
+                    <Title>{board.title}</Title>
+                    <Date>{getDate(board.createdAt)}</Date>
+                </RowWrapper>
+                <RowWrapper>
+                    <Checkbox type="checkbox" id={316} onClick={handleCheck} checked={checked[board.number]} />
+                    <No>{board.number}</No>
+                    <Title>{board.title}</Title>
+                    <Date>{getDate(board.createdAt)}</Date>
+                </RowWrapper>
+                </>
             ))}
         </div>
     )

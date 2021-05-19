@@ -30,13 +30,13 @@ export const RowWrapper = styled.div`
 export const Checkbox = styled.input`
     width: 10%;
     height: auto;
-    margin: auto;
+    /* margin: auto; */
 `
 
 export const No = styled.div`
     width: 20%;
     height: auto;
-    padding: auto;
+    /* padding: auto; */
 `
 
 export const Title = styled.div`

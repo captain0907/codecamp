@@ -3,12 +3,17 @@ import { useState } from "react"
 import QueryWriteUI from './QueryWrite.presenter'
 import {useRouter} from 'next/router'
 import { CREATE_PROFILE } from './QueryWrite.queries'
+import { IMutation, IMutationCreateProfileArgs } from "../../../commons/types/generated/types"
+
+interface IProfile {
+    [key: string]: string
+}
 
 // function Query() {
 const QueryWrite = () => {
     const router = useRouter()
-    const [createProfile] = useMutation(CREATE_PROFILE)
-    const [profile, setProfile] = useState({
+    const [createProfile, {data}] = useMutation<IMutation, IMutationCreateProfileArgs>(CREATE_PROFILE)
+    const [profile, setProfile] = useState<IProfile>({
         name: "",
         age: "",
         school: ""
@@ -17,7 +22,7 @@ const QueryWrite = () => {
     const [aaa, setAaa] = useState(false)
 
     const onChangeInput = (event) => {
-        const newProfile = { ...profile, [event.target.name]: event.target.value }
+        const newProfile: IProfile = { ...profile, [event.target.name]: event.target.value }
         if(newProfile.name && newProfile.age && newProfile.school) setAaa(true)
         setProfile(newProfile)
 

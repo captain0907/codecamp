@@ -8,14 +8,12 @@ const BoardListUI = ({data}) => {
 
     const [checked, setChecked] = useState([
         // 각 버튼들의 체크상태 기록
+        // 318, 320, ...
     ])
 
     const handleCheck = (event) => {
         const number = Number(event.target.id)
 
-        /////////////////////////////////////////////////
-        // 1. 현재 내 자신의 체크상태 변경
-        /////////////////////////////////////////////////
         let newChecked = []
         if(checked.includes(number)){
             newChecked = checked.filter((data) => data !== number)
@@ -25,15 +23,6 @@ const BoardListUI = ({data}) => {
             setChecked(newChecked)
         }
 
-        /////////////////////////////////////////////////
-        // 2. 전체선택버튼 체크상태 변경
-        // ----------------------------------------------
-        // if( 모두 체크되었는지 확인 ){
-        //      전체선택버튼도 체크해줌 setCheckedAll(true) 
-        // } else {
-        //      전체선택버튼도 체크해줌 setCheckedAll(false) 
-        // }
-        /////////////////////////////////////////////////
         if(data?.fetchBoards.length === newChecked.length){
             setCheckedAll(true)
         } else {
@@ -61,15 +50,15 @@ const BoardListUI = ({data}) => {
     return (
         <div>
             <RowHeaderWrapper>
-                <Checkbox type="checkbox" onClick={handleCheckAll} checked={checkedAll} />
+                <Checkbox type="checkbox" onChange={handleCheckAll} checked={checkedAll} />
                 <No>번호</No>
                 <Title>제목</Title>
                 <Date>작성일</Date>
             </RowHeaderWrapper>
             {data?.fetchBoards.map((board) => (
                 <RowWrapper>
-                    <Checkbox type="checkbox" id={board.number} onClick={handleCheck} checked={checked.includes(board.number)} />
-                    <No>{board.number}</No>
+                    <Checkbox type="checkbox" id={board.number} onChange={handleCheck} checked={checked.includes(board.number)} />
+                    <No>{board.number}</No>                                                 {/* [318, 371, ....] */}
                     <Title>{board.title}</Title>
                     <Date>{getDate(board.createdAt)}</Date>
                 </RowWrapper>
