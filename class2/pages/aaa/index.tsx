@@ -6,7 +6,7 @@ export default function BBB() {
 
   return (
     <div>
-      <Title>제목입니다.</Title>
+      <Title>{ddd}제목입니다.{ccc}</Title>
       <Email>로그인 이메일</Email>
       <label>로그인 이메일</label>
       <input type="text" />
