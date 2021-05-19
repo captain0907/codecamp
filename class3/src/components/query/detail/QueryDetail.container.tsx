@@ -30,7 +30,7 @@ const QueryDetail = () => {
 
 
 
-    return <QueryDetailUI data={data} />
+    return <QueryDetailUI data={data} {ccc} />
 }
 
 export default QueryDetail
