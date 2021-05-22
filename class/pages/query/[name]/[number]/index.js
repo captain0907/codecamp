@@ -1,13 +1,9 @@
-import { useRouter } from "next/router"
+import { useRouter } from 'next/router'
 
+export default function QueryDetailPage () {
+  const router = useRouter()
 
-export default function QueryDetailPage(){
-    
-    const router = useRouter()
+  console.log(router.query)
 
-    console.log(router.query)
-
-    return (
-        <div>상세보기 페이지입니다.</div>
-    )
+  return <div>상세보기 페이지입니다.</div>
 }
