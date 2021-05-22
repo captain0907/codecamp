@@ -14,7 +14,7 @@
     "getSchema": "graphql get-schema",
     "generate": "graphql-codegen",
     "storybook": "start-storybook",
-    "lint": "tsc && eslint .",
+    "lint": "tsc --noEmit && eslint 'src/**/*.ts{x,}' --fix --quiet",
     "docs": "npm run test && npm run docs:typedoc && npm run docs:storybook",
     "docs:storybook": "build-storybook -c .storybook -o docs/uis",
     "docs:typedoc": "typedoc --out docs/apis --plugin typedoc-plugin-external-module-name src",
