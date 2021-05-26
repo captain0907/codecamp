@@ -1,6 +1,9 @@
 import { getDate } from '../../../commons/libraries/utils'
 import {RowHeaderWrapper, RowWrapper, Checkbox, No, Title, Date} from './BoardList.styles'
 import {useState} from 'react'
+import gql from 'graphql-tag'
+import { useMutation, useQuery } from '@apollo/client'
+import { FETCH_BOARDS } from './BoardList.queries'
 
 const BoardListUI = ({data}) => {
 
@@ -72,6 +75,99 @@ const BoardListUI = ({data}) => {
         }
     }
 
+
+    // const profile = [10, 20]
+    // profile[0] // 10
+    // profile[1] // 20
+
+    // const aaa = profile[0] // 10
+    // const bbb = profile[1] // 20
+
+    // //////////////////////////
+    // const profile2 = [10, 20]
+    // const aaa2 = profile2[0] // 10
+    // const bbb2 = profile2[1] // 20
+
+    // // 배열 비구조화할당 /////////////////////////
+    // const [, aaa4] = [10, 20] // aaa4 = 20
+    // const [aaa3] = [10, 20] // aaa3 = 10
+
+    // // 객체 비구조화할당 ////////////////////
+    // const profile5 = {
+    //     name: "철수",
+    //     age: 13,
+    //     school: "다람쥐초등학교"
+    // }
+    // const name2 = profile5.name
+    // const age2 = profile5.age
+    // const school2 = profile5.school
+
+    // //
+    // const { name, age, school} = {
+    //     name: "철수",
+    //     age: 13,
+    //     school: "다람쥐초등학교"
+    // }
+
+
+    // useMutation() => // [] 형태
+    // const result = useMutation(임의의뮤테이션)
+    // // const [deleteBoard] = [뮤테이션실행하는함수,]
+    // result[0]({
+    //     variables: {
+    //         number: 360
+    //     }
+    // })
+
+    // deleteBoard({
+    //     variables: {
+    //         number: 360
+    //     }
+    // })
+                   
+
+
+    // useQuery() => // {} 형태
+    // const result2 = useQuery(임의의쿼리)
+    // result2.data
+
+    // const {data, loading} = useQuery(임의의쿼리)
+
+    //                 // {
+    //                 //    data: laskfasdk,
+    //                 //    loading: askl
+    //                 // }
+
+    
+
+
+
+
+
+
+
+
+
+    
+    const DELETE_BOARD = gql`
+        mutation deleteBoard($number: Int!){
+            deleteBoard(number: $number){
+                message
+            }
+        }
+    `
+    const [deleteBoard] = useMutation(DELETE_BOARD)
+
+    const onClickDelete = async (event) => {
+        const result = await deleteBoard({
+            variables: {
+                number: Number(event.target.id)
+            },
+            refetchQueries: [{query: FETCH_BOARDS}]
+        })
+        alert(result.data.deleteBoard.message)
+    }
+
     return (
         <div>
             <RowHeaderWrapper>
@@ -80,27 +176,15 @@ const BoardListUI = ({data}) => {
                 <Title>제목</Title>
                 <Date>작성일</Date>
             </RowHeaderWrapper>
-            {data?.fetchBoards.map((board) => (
-                <>
-                <RowWrapper>
-                    <Checkbox type="checkbox" id="318" onClick={handleCheck} checked={checked[board.number]} />
+            {data?.fetchBoards.map((board, index) => (
+                <RowWrapper key={index}>
+                    <Checkbox type="checkbox" onClick={handleCheck} checked={checked[board.number]} />
                     <No>{board.number}</No>
                     <Title>{board.title}</Title>
                     <Date>{getDate(board.createdAt)}</Date>
+                    <div >현재 인덱스: {index}</div>
+                    <button id={board.number} onClick={onClickDelete}>삭제</button>
                 </RowWrapper>
-                <RowWrapper>
-                    <Checkbox type="checkbox" id={321} onClick={handleCheck} checked={checked[board.number]} />
-                    <No>{board.number}</No>
-                    <Title>{board.title}</Title>
-                    <Date>{getDate(board.createdAt)}</Date>
-                </RowWrapper>
-                <RowWrapper>
-                    <Checkbox type="checkbox" id={316} onClick={handleCheck} checked={checked[board.number]} />
-                    <No>{board.number}</No>
-                    <Title>{board.title}</Title>
-                    <Date>{getDate(board.createdAt)}</Date>
-                </RowWrapper>
-                </>
             ))}
         </div>
     )

@@ -4,6 +4,7 @@ import QueryWriteUI from './QueryWrite.presenter'
 import {useRouter} from 'next/router'
 import { CREATE_PROFILE } from './QueryWrite.queries'
 import { IMutation, IMutationCreateProfileArgs } from "../../../commons/types/generated/types"
+import Modal from "../../../commons/modal/Modal.container"
 
 interface IProfile {
     [key: string]: string
@@ -20,6 +21,7 @@ const QueryWrite = () => {
     })
 
     const [aaa, setAaa] = useState(false)
+    const [open, setOpen] = useState(false)
 
     const onChangeInput = (event) => {
         const newProfile: IProfile = { ...profile, [event.target.name]: event.target.value }
@@ -51,17 +53,25 @@ const QueryWrite = () => {
                     age: Number(profile.age)
                 }
             })
-            alert(result.data.createProfile.message)
-            router.push(`/query/${profile.name}`)
+            setOpen(true)
+
+            // alert(result.data.createProfile.message)
+            // router.push(`/query/${profile.name}`)
         } catch(error){
             alert(error.message)
         }
+    }
+
+    const handleClose = () => {
+        setOpen(false)
     }
 
     return (
         <QueryWriteUI 
             onClickSubmit={onClickSubmit}
             onChangeInput={onChangeInput}
+            handleClose={handleClose}
+            open={open}
             aaa={aaa}
         />
     )
