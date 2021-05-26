@@ -1,10 +1,10 @@
 import { useMutation } from "@apollo/client"
-import { useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import QueryWriteUI from './QueryWrite.presenter'
 import {useRouter} from 'next/router'
 import { CREATE_PROFILE } from './QueryWrite.queries'
-import { IMutation, IMutationCreateProfileArgs } from "../../../commons/types/generated/types"
-import Modal from "../../../commons/modal/Modal.container"
+// import { IMutation, IMutationCreateProfileArgs } from '../../../commons/types/generated/types'
+// import Modal from "../../../commons/modal/Modal.container"
 
 interface IProfile {
     [key: string]: string
@@ -13,7 +13,7 @@ interface IProfile {
 // function Query() {
 const QueryWrite = () => {
     const router = useRouter()
-    const [createProfile, {data}] = useMutation<IMutation, IMutationCreateProfileArgs>(CREATE_PROFILE)
+    const [createProfile, {data}] = useMutation(CREATE_PROFILE)
     const [profile, setProfile] = useState<IProfile>({
         name: "",
         age: "",
@@ -66,8 +66,32 @@ const QueryWrite = () => {
         setOpen(false)
     }
 
+    const inputRef = useRef<HTMLInputElement>(null)
+
+    const [testState, setTestState] = useState(1)
+    const [ccc, setCcc] = useState(123)
+
+    const handleChangeCcc = () => {
+        setCcc(456)
+    }
+
+    // useEffect(() => {
+    //     inputRef.current.focus()
+    //     if(testState < 10 ) setTestState(prev => prev + 1)
+    //     console.log(testState)
+    //     console.log('aaaa')
+    //     if(testState === 10) return () => {}
+    //     console.log('useEffect가 실행되었습니다.')
+    // })
+
+
+
+    console.log('11111111111111111111111')
+
     return (
-        <QueryWriteUI 
+        <QueryWriteUI
+            handleChangeCcc={handleChangeCcc}
+            inputRef={inputRef}
             onClickSubmit={onClickSubmit}
             onChangeInput={onChangeInput}
             handleClose={handleClose}
