@@ -48,3 +48,16 @@ export const Date = styled.div`
     width: 20%;
     height: auto;
 `
+
+interface IProps {
+    isActive: boolean
+}
+export const Page = styled.span`
+    padding-left: 15px;
+    padding-right: 15px;
+    cursor: pointer;
+
+    color: ${(props: IProps) => 
+        props.isActive ? 'red': 'black'
+    }
+`
