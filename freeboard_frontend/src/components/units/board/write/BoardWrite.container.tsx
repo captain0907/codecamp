@@ -9,6 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
+import AvatarEditor from "react-avatar-editor";
 import { useMutation } from "@apollo/client";
 
 const inputsInit = {
@@ -27,6 +28,8 @@ export default function BoardWrite({ defaultValues }) {
   const [createBoard] = useMutation(CREATE_BOARD);
   const [uploadFile] = useMutation(UPLOAD_FILE);
   const fileRef = useRef<HTMLInputElement>(null);
+  const [myFile, setMyFile] = useState("");
+  const [myUrl, setMyUrl] = useState("");
 
   const onChangeInput = (event) => {
     const newInputs = { ...inputs, [event.target.name]: event.target.value };
@@ -66,23 +69,62 @@ export default function BoardWrite({ defaultValues }) {
 
   const onChangeFile = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files[0];
-    // if (file.size >= 5 * 1024 * 1024) {
-    //   alert("용량이 너무 큽니다.");
-    //   return;
-    // }
-    const { data } = await uploadFile({ variables: { file } });
-    console.log(data);
+    if (file.size >= 5 * 1024 * 1024) {
+      alert("용량이 너무 큽니다.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      console.log(typeof event.target.result);
+      setMyFile(String(event.target.result));
+    };
+
+    // const { data } = await uploadFile({ variables: { file } });
+    // console.log(data);
+    // setMyUrl(`https://storage.cloud.google.com/${data.uploadFile.url}`);
+
+    const start = new Date().getTime();
+    // await uploadFile({ variables: { file } });
+    // await uploadFile({ variables: { file } });
+    // await uploadFile({ variables: { file } });
+    // await uploadFile({ variables: { file } });
+    // await uploadFile({ variables: { file } });
+    // await uploadFile({ variables: { file } }),
+    await Promise.all([
+      uploadFile({ variables: { file } }),
+      uploadFile({ variables: { file } }),
+      uploadFile({ variables: { file } }),
+      uploadFile({ variables: { file } }),
+      uploadFile({ variables: { file } }),
+    ]);
+    const end = new Date().getTime();
+    console.log(end - start);
   };
 
   return (
-    <BoardWriteUI
-      isActive={isActive}
-      onChangeInput={onChangeInput}
-      onClickRegister={onClickRegister}
-      defaultValues={defaultValues}
-      onClickFile={onClickFile}
-      onChangeFile={onChangeFile}
-      fileRef={fileRef}
-    />
+    <>
+      <img src={myFile} />
+      <img src={myUrl} />
+      <AvatarEditor
+        image={myFile}
+        width={250}
+        height={250}
+        border={50}
+        color={[255, 255, 255, 0.6]} // RGBA
+        scale={1.2}
+        rotate={0}
+      />
+      <BoardWriteUI
+        isActive={isActive}
+        onChangeInput={onChangeInput}
+        onClickRegister={onClickRegister}
+        defaultValues={defaultValues}
+        onClickFile={onClickFile}
+        onChangeFile={onChangeFile}
+        fileRef={fileRef}
+      />
+    </>
   );
 }
