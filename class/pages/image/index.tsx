@@ -41,25 +41,44 @@ const ImagePage = () => {
 
     // console.log(file);
     // setFile(file);
-    const start = new Date().getTime();
-    await uploadFileMutation({
-      variables: { file: file },
-    });
-    await uploadFileMutation({
-      variables: { file: file },
-    });
-    await uploadFileMutation({
-      variables: { file: file },
-    });
-    await uploadFileMutation({
-      variables: { file: file },
-    });
-    await uploadFileMutation({
-      variables: { file: file },
-    });
+    const start = performance.now();
+    await Promise.all(
+      new Array(5)
+        .fill(1)
+        .map(() => uploadFileMutation({ variables: { file: file } }))
+    );
+
+    // 1) [1, 1, 1, 1, 1]
+    // 2) [1, 1, 1, 1, 1].map(() => uploadFileMutation({ variables: { file: file } }))
+    //    [ ,  ,  ,  ,  ]
+
+
+
+
+
+
+
+
+
+    // for (let i = 0; i < 5; i++) {
+
+    // }
+
+    // await uploadFileMutation({
+    //   variables: { file: file },
+    // });
+    // await uploadFileMutation({
+    //   variables: { file: file },
+    // });
+    // await uploadFileMutation({
+    //   variables: { file: file },
+    // });
+    // await uploadFileMutation({
+    //   variables: { file: file },
+    // });
     // const result =
 
-    const end = new Date().getTime();
+    const end = performance.now();
     console.log(end - start);
   };
 

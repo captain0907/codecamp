@@ -14,7 +14,13 @@ import { useMutation, useQuery } from "@apollo/client";
 import { FETCH_BOARDS } from "./BoardList.queries";
 import InfiniteScroll from "react-infinite-scroller";
 
-const BoardListUI = ({ data, onClickPage, currentPage, onLoadMore }) => {
+const BoardListUI = ({
+  data,
+  onClickPage,
+  currentPage,
+  onLoadMore,
+  hasMore,
+}) => {
   const [checkedAll, setCheckedAll] = useState(false);
 
   const [checked, setChecked] = useState({
@@ -24,12 +30,29 @@ const BoardListUI = ({ data, onClickPage, currentPage, onLoadMore }) => {
     // ... 10개 모두 true
   });
 
+  const [count, setCount] = useState(1);
+
   const handleCheck = (event) => {
     /////////////////////////////////////////////////
     // 1. 현재 내 자신의 체크상태 변경
     /////////////////////////////////////////////////
-    const newChecked = { ...checked, [event.target.id]: event.target.checked };
-    setChecked(newChecked);
+
+    setCount(count + 1);
+    setCount(count + 1);
+    setCount(count + 1);
+    setCount(count + 1);
+    setCount(count + 1);
+    setCount(count + 1);
+
+    // const newChecked = {
+    //   ...checked,
+    //   [event.target.id]: event.target.checked
+    // };
+    // setChecked(newChecked);
+
+    // checked.
+
+    // setChecked(prev => )
 
     /////////////////////////////////////////////////
     // 2. 전체선택버튼 체크상태 변경
@@ -172,12 +195,7 @@ const BoardListUI = ({ data, onClickPage, currentPage, onLoadMore }) => {
         <Title>제목</Title>
         <Date>작성일</Date>
       </RowHeaderWrapper>
-      <InfiniteScroll
-        loadMore={onLoadMore}
-        hasMore={true}
-        threshold={1}
-        height={1000}
-      >
+      <InfiniteScroll loadMore={onLoadMore} hasMore={true} height={1000}>
         {data?.fetchBoards.map((board, index) => (
           <RowWrapper key={index}>
             <Checkbox

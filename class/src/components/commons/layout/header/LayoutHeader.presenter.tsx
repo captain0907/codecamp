@@ -1,7 +1,10 @@
-const LayoutHeaderUI = () => {
-    return (
-        <div>헤더영역</div>
-    )
-}
+import { useContext } from "react";
+import { LayoutContext } from "../index";
 
-export default LayoutHeaderUI
+const LayoutHeaderUI = () => {
+  const { test } = useContext(LayoutContext);
+
+  return <div>헤더영역: {test}</div>;
+};
+
+export default LayoutHeaderUI;

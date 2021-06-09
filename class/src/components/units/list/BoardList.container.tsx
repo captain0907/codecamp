@@ -9,14 +9,17 @@ const BoardList = () => {
   const { data, fetchMore } = useQuery<IQuery>(FETCH_BOARDS, {
     variables: { page: currentPage },
   });
+  const [hasMore, setHasMore] = useState(true);
 
   const onClickPage = (event) => {
     setCurrentPage(Number(event.target.id));
   };
 
   const onLoadMore = () => {
+    if (data?.fetchBoards.length % 10 !== 0) return;
+
     fetchMore({
-      variables: { page: data?.fetchBoards.length / 10 },
+      variables: { page: Math.floor(data?.fetchBoards.length / 10) + 1 },
       updateQuery: (prev, { fetchMoreResult }) => ({
         fetchBoards: [...prev.fetchBoards, ...fetchMoreResult.fetchBoards],
       }),
@@ -29,6 +32,7 @@ const BoardList = () => {
       currentPage={currentPage}
       onClickPage={onClickPage}
       onLoadMore={onLoadMore}
+      hasMore={hasMore}
     />
   );
 };
