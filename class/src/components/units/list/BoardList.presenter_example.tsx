@@ -29,7 +29,8 @@ const BoardListUI = ({ data }) => {
           <Checkbox
             id={board.number}
             type="checkbox"
-            onClick={onClickCheckbox(board.number)}{/* onClickCheckbox(board.number)(event) */}
+            onClick={onClickCheckbox(board.number)}
+            {/* onClickCheckbox(board.number)(event) */}
           />
           <No>{board.number}</No>
           <Title>{board.title}</Title>
