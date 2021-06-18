@@ -1,6 +1,11 @@
-import { gql, useMutation } from "@apollo/client";
+import {
+  gql,
+  useApolloClient,
+  useLazyQuery,
+  useMutation,
+} from "@apollo/client";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../_app";
 
 const LOGIN_USER_EXAMPLE = gql`
@@ -11,13 +16,35 @@ const LOGIN_USER_EXAMPLE = gql`
   }
 `;
 
+const FETCH_USER_LOGGED_IN = gql`
+  query fetchUserLoggedIn {
+    fetchUserLoggedIn {
+      email
+      name
+      userPoint {
+        amount
+      }
+    }
+  }
+`;
+
 const LoginPage = () => {
   const router = useRouter();
-  const { setAccessToken } = useContext(GlobalContext);
+  const { setAccessToken, setUserInfo } = useContext(GlobalContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginUserExample] = useMutation(LOGIN_USER_EXAMPLE);
+
+  const client = useApolloClient();
+
+  // const [fetchUserLazy, { data }] = useLazyQuery(FETCH_USER_LOGGED_IN);
+
+  // useEffect(() => {
+
+  //   data.fetchUserInfo
+
+  // }, [data])
 
   const onChangeEmail = (event) => {
     setEmail(event.target.value);
@@ -35,7 +62,22 @@ const LoginPage = () => {
         variables: { email, password },
       });
       setAccessToken(data?.loginUserExample.accessToken);
-      router.push("/tokentest/tokentest2");
+      // fetchUserLazy({
+      //   context: {
+      //     headers: { authorization: data?.loginUserExample.accessToken },
+      //   },
+      // });
+      const userInfo = await client.query({
+        query: FETCH_USER_LOGGED_IN,
+        context: {
+          headers: { authorization: data?.loginUserExample.accessToken },
+        },
+      });
+      setUserInfo(userInfo.data.fetchUserLoggedIn);
+
+      // userInfo;
+
+      // router.push("/tokentest/tokentest2");
     } catch (error) {
       alert(error.message);
     }

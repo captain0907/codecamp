@@ -25,7 +25,7 @@ const BoardListUI = ({ data }) => {
         <Date>작성일</Date>
       </RowHeaderWrapper>
       {data?.fetchBoards.map((board) => (
-        <RowWrapper>
+        <RowWrapper key={board.number}>
           <Checkbox
             id={board.number}
             type="checkbox"

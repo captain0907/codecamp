@@ -3,20 +3,38 @@ import {
   InMemoryCache,
   ApolloProvider,
   ApolloLink,
+  useQuery,
+  useLazyQuery,
+  useApolloClient,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import GlobalStyles from "../src/commons/styles/globalStyles";
 import Layout from "../src/components/commons/layout";
 import { createUploadLink } from "apollo-upload-client";
 import { createContext, useState } from "react";
-import axios from "axios";
+import Head from "next/head";
+
+// // 1.
+// const {data} = useQuery(FETCH_USER) // 컴포넌트가 그려질때 자동실행
+
+// // 2.
+// const [aaa, {data}] = useLazyQuery(FETCH_USER) // 내가 요청하고 싶을때 aaa() 이걸로 실행
+// aaa()
+
+// // 3.
+// const client = useApolloClient() // 내가 요청하고 싶을때
+// const result = await client.query({ query: FETCH_USER }) // 이걸로 실행 (axios 비슷)
+// result.data.fetchUser // 유저정보 들어옴
 
 export const GlobalContext = createContext({
   accessToken: "",
   setAccessToken: (_: string) => {},
+  userInfo: {},
+  setUserInfo: (_: string) => {},
 });
 function MyApp({ Component, pageProps }) {
   const [accessToken, setAccessToken] = useState("");
+  const [userInfo, setUserInfo] = useState({});
 
   const uploadLink = createUploadLink({
     uri: "http://backend.codebootcamp.co.kr/graphql",
@@ -69,7 +87,9 @@ function MyApp({ Component, pageProps }) {
   });
 
   return (
-    <GlobalContext.Provider value={{ accessToken, setAccessToken }}>
+    <GlobalContext.Provider
+      value={{ accessToken, setAccessToken, userInfo, setUserInfo }}
+    >
       <ApolloProvider client={client}>
         <Layout>
           <GlobalStyles />
