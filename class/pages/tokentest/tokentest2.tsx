@@ -26,4 +26,4 @@ const TokenTest2Page = (props) => {
   return <button onClick={onClickMove}>전체공개 페이지로 이동하기</button>;
 };
 
-export default withAuth(TokenTest2Page)("http://localhost:3000");
+export default withAuth(TokenTest2Page);

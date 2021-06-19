@@ -27,10 +27,10 @@ const Layout = ({ children }) => {
   const isHeader = !withoutHeader.includes(router.pathname);
   const isNavigation = !withoutNavigation.includes(router.pathname);
 
-  console.log(router.pathname);
-  console.log(router.asPath);
-  console.log(router.basePath);
-  console.log(router.route);
+  // console.log(router.pathname);
+  // console.log(router.asPath);
+  // console.log(router.basePath);
+  // console.log(router.route);
 
   const [test, setTest] = useState("이것은 테스트입니다.");
 
