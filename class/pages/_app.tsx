@@ -14,6 +14,7 @@ import { createUploadLink } from "apollo-upload-client";
 import { createContext, useState } from "react";
 import Head from "next/head";
 import axios from "axios";
+import getAccessToken from "../src/commons/libraries/getAccessToken";
 
 // // 1.
 // const {data} = useQuery(FETCH_USER) // 컴포넌트가 그려질때 자동실행
@@ -45,39 +46,18 @@ function MyApp({ Component, pageProps }) {
   });
 
   // @ts-ignore
-  const errorLink = onError(async ({ graphQLErrors, operation, forward }) => {
+  const errorLink = onError(({ graphQLErrors, operation, forward }) => {
     if (graphQLErrors) {
       for (let err of graphQLErrors) {
         if (err.extensions.code === "UNAUTHENTICATED") {
-          // 만료된 토큰을 재발급 받기
-          const response = await axios.post(
-            "https://backend.codebootcamp.co.kr/graphql",
-            {
-              query: `
-                  mutation restoreAccessToken {
-                    restoreAccessToken {
-                      accessToken
-                    }
-                  }
-                `,
-            },
-            {
-              headers: { "Content-Type": "application/json" },
-              withCredentials: true,
-            }
-          );
-          const newAccessToken =
-            response.data.data.restoreAccessToken.accessToken;
-          setAccessToken(newAccessToken);
-
           // 재발급 받은 토큰으로 실패했던 쿼리 다시 날리기
           operation.setContext({
             headers: {
               ...operation.getContext().headers,
-              authorization: `Bearer ${newAccessToken}`,
+              authorization: `Bearer ${getAccessToken({ setAccessToken })}`,
             },
           });
-          return await forward(operation);
+          return forward(operation);
         }
       }
     }

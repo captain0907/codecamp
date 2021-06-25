@@ -9,8 +9,8 @@ import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../_app";
 
 const LOGIN_USER = gql`
-  mutation loginUser($email: String!, $password: String!) {
-    loginUser(email: $email, password: $password) {
+  mutation loginUserExample($email: String!, $password: String!) {
+    loginUserExample(email: $email, password: $password) {
       accessToken
     }
   }
@@ -61,7 +61,7 @@ const LoginPage = () => {
       const { data } = await loginUser({
         variables: { email, password },
       });
-      setAccessToken(data?.loginUser.accessToken);
+      setAccessToken(data?.loginUserExample.accessToken);
       // fetchUserLazy({
       //   context: {
       //     headers: { authorization: data?.loginUserExample.accessToken },
@@ -70,7 +70,7 @@ const LoginPage = () => {
       const userInfo = await client.query({
         query: FETCH_USER_LOGGED_IN,
         context: {
-          headers: { authorization: data?.loginUser.accessToken },
+          headers: { authorization: data?.loginUserExample.accessToken },
         },
       });
       setUserInfo(userInfo.data.fetchUserLoggedIn);
