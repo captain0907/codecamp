@@ -1,5 +1,5 @@
 {
-  "name": "test",
+  "name": "mmm",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "axios": "^0.21.1",
     "next": "11.0.1",
     "react": "17.0.2",
     "react-dom": "17.0.2"

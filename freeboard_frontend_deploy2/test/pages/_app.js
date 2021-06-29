@@ -5,7 +5,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <meta
+        {/* <meta
           name="naver-site-verification"
           content="140cd4f2abecd071acede4d5ce74ce06413fe120"
         />
@@ -17,7 +17,7 @@ function MyApp({ Component, pageProps }) {
         <meta
           property="og:description"
           content="코드캠프1기들 모여주세요!!!"
-        ></meta>
+        ></meta> */}
 
         <script
           async
