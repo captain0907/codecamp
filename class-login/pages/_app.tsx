@@ -2,6 +2,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 
 function MyApp({ Component, pageProps }) {
   const client = new ApolloClient({
+    uri: "http://backend.codebootcamp.co.kr",
     cache: new InMemoryCache(),
   });
 
