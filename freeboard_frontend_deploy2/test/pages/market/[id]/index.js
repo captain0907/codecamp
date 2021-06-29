@@ -6,6 +6,8 @@ import Link from "next/link";
 const MarketPage = (pageProps) => {
   const router = useRouter();
 
+  console.log("hi~component");
+
   return (
     <>
       <Head>
