@@ -1,11 +1,6 @@
-import {
-  gql,
-  useApolloClient,
-  useLazyQuery,
-  useMutation,
-} from "@apollo/client";
+import { gql, useApolloClient, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { GlobalContext } from "../_app";
 
 const LOGIN_USER = gql`
@@ -83,6 +78,10 @@ const LoginPage = () => {
     }
   };
 
+  const onClickLoginGoogle = () => {
+    window.open("https://backend.codebootcamp.co.kr/api/login/google/callback");
+  };
+
   return (
     <form>
       이메일: <input type="text" onChange={onChangeEmail} />
@@ -91,6 +90,7 @@ const LoginPage = () => {
       <input type="password" autoComplete="on" onChange={onChangePassword} />
       <br />
       <button onClick={onClickLogin}>로그인하기</button>
+      <button onClick={onClickLoginGoogle}>소셜로그인하기</button>
     </form>
   );
 };
