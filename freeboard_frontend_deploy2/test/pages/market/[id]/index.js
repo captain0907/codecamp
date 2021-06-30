@@ -3,7 +3,7 @@ import Head from "next/head";
 import axios from "axios";
 import Link from "next/link";
 
-const MarketPage = () => {
+const MarketPage = (pageProps) => {
   const router = useRouter();
 
   console.log("hi~component");
@@ -23,6 +23,7 @@ const MarketPage = () => {
 export default MarketPage;
 
 export const getServerSideProps = async (context) => {
+  console.log(context);
   console.log("hi~~~");
   const { data } = await axios.get(
     `https://koreanjson.com/posts/${context.query.id}`
