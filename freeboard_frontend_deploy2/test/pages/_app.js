@@ -8,16 +8,7 @@ function MyApp({ Component, pageProps }) {
         {/* <meta
           name="naver-site-verification"
           content="140cd4f2abecd071acede4d5ce74ce06413fe120"
-        />
-        <meta property="og:title" content="코드캠프1기 사이트!!"></meta>
-        <meta
-          property="og:image"
-          content="https://dullyshin.github.io/2018/08/30/HTML-imgLink/#lg=1&slide=0"
-        ></meta>
-        <meta
-          property="og:description"
-          content="코드캠프1기들 모여주세요!!!"
-        ></meta> */}
+        />*/}
 
         <script
           async
